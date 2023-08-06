@@ -1,7 +1,10 @@
 package com.chtrembl.petstoreapp.controller;
 
-import java.io.IOException;
-import java.util.Enumeration;
+import com.chtrembl.petstoreapp.model.ContainerEnvironment;
+import com.chtrembl.petstoreapp.model.WebRequest;
+import org.slf4j.MDC;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,18 +12,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
-import org.jboss.logging.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-
-import com.chtrembl.petstoreapp.model.ContainerEnvironment;
-import com.chtrembl.petstoreapp.model.WebRequest;
+import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * First Filter in the chain to set some MDC data for logging purposes, since
- * this is statis data, nothing request scope (yet), this could be moved to the
+ * this is static data, nothing request scope (yet), this could be moved to the
  * logging context singleton.
  */
 @Component
