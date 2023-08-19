@@ -42,5 +42,4 @@ spring:
 
 azure:
   application-insights:
-    enabled: true
-    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY}
+    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY:}
