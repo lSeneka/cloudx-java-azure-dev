@@ -12,9 +12,6 @@ petstore:
       url: ${PETSTOREPRODUCTSERVICE_URL:http://localhost:8082}
 
 spring:
-  azure:
-    application-insights:
-      instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY}
   application:
     name: petstoreorderservice
   mvc:
@@ -32,3 +29,8 @@ management:
   endpoint:
     httptrace:
       enabled: true
+
+azure:
+  application-insights:
+    enabled: true
+    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY}

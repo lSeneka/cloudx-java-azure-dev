@@ -33,12 +33,14 @@ management:
     httptrace:
       enabled: true
 spring:
-  azure:
-    application-insights:
-      instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY}
   application:
     name: petstoreapp
   thymeleaf:
     cache: false
   cache:
     cache-names: currentUsers
+
+azure:
+  application-insights:
+    enabled: true
+    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY}

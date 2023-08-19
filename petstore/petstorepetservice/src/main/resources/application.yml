@@ -7,14 +7,16 @@ server:
   port: ${PETSTOREPETSERVICE_SERVER_PORT:8080}
 
 spring:
-  azure:
-    application-insights:
-      instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY}
   application:
     name: petstorepetservice
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+azure:
+  application-insights:
+    enabled: true
+    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY}
 
 management:
   endpoints:
