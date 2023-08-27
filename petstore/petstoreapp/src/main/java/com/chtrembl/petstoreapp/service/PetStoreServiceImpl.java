@@ -15,6 +15,7 @@ import com.chtrembl.petstoreapp.model.WebRequest;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -34,22 +35,18 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PetStoreServiceImpl implements PetStoreService {
     private static final Logger logger = LoggerFactory.getLogger(PetStoreServiceImpl.class);
 
     private final User sessionUser;
     private final ContainerEnvironment containerEnvironment;
     private final WebRequest webRequest;
+    private final OrderItemsReserveService reserveService;
 
     private WebClient petServiceWebClient = null;
     private WebClient productServiceWebClient = null;
     private WebClient orderServiceWebClient = null;
-
-    public PetStoreServiceImpl(User sessionUser, ContainerEnvironment containerEnvironment, WebRequest webRequest) {
-        this.sessionUser = sessionUser;
-        this.containerEnvironment = containerEnvironment;
-        this.webRequest = webRequest;
-    }
 
     @PostConstruct
     public void initialize() {
@@ -202,21 +199,21 @@ public class PetStoreServiceImpl implements PetStoreService {
             if (completeOrder) {
                 updatedOrder.setComplete(true);
             } else {
-                List<Product> products = new ArrayList<Product>();
+                List<Product> products = new ArrayList<>();
                 Product product = new Product();
-                product.setId(Long.valueOf(productId));
+                product.setId(productId);
                 product.setQuantity(quantity);
                 products.add(product);
                 updatedOrder.setProducts(products);
             }
 
-            String orderJSON = new ObjectMapper().setSerializationInclusion(Include.NON_NULL)
+            var orderJSON = new ObjectMapper().setSerializationInclusion(Include.NON_NULL)
                     .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                     .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false).writeValueAsString(updatedOrder);
 
             Consumer<HttpHeaders> consumer = it -> it.addAll(this.webRequest.getHeaders());
 
-            updatedOrder = this.orderServiceWebClient.post().uri("petstoreorderservice/v2/store/order")
+            this.orderServiceWebClient.post().uri("petstoreorderservice/v2/store/order")
                     .body(BodyInserters.fromPublisher(Mono.just(orderJSON), String.class))
                     .accept(MediaType.APPLICATION_JSON)
                     .headers(consumer)
@@ -225,6 +222,7 @@ public class PetStoreServiceImpl implements PetStoreService {
                     .retrieve()
                     .bodyToMono(Order.class).block();
 
+            this.reserveService.reserveOrder(orderJSON);
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }

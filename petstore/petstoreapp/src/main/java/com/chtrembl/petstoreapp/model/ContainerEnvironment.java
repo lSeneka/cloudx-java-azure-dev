@@ -48,6 +48,9 @@ public class ContainerEnvironment implements Serializable {
 
 	private boolean securityEnabled = false;
 
+	@Value("${petstore.service.reserve-order.url:}")
+	private String orderItemsReserveServiceURL;
+
 	@Value("${petstore.service.pet.url:}")
 	private String petStorePetServiceURL;
 
@@ -205,6 +208,10 @@ public class ContainerEnvironment implements Serializable {
 
 	public String getPetStorePetServiceURL() {
 		return petStorePetServiceURL;
+	}
+
+	public String getOrderItemsReserveServiceURL() {
+		return orderItemsReserveServiceURL;
 	}
 
 	public String getPetStoreProductServiceURL() {

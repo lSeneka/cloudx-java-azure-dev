@@ -27,6 +27,7 @@
         <azure-active-directory.version>2.2.4</azure-active-directory.version>
         <spring-cloud-azure-starter.version>4.6.0</spring-cloud-azure-starter.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <lombok.version>1.18.28</lombok.version>
     </properties>
 
     <dependencies>
@@ -132,6 +133,12 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
