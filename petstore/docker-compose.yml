@@ -12,6 +12,7 @@ services:
       - PETSTOREPETSERVICE_URL=http://petstorepetservice:8081
       - PETSTOREPRODUCTSERVICE_URL=http://petstoreproductservice:8082
       - PETSTOREORDERSERVICE_URL=http://petstoreorderservice:8083
+      - ORDER_ITEMS_RESERVE_URL=http://order-items-reserve:8084
     networks:
       - petstorebridge
 
@@ -46,6 +47,28 @@ services:
     networks:
       - petstorebridge
 
+#  order-items-reserve:
+#    image: order-items-reserve:latest
+#    ports:
+#      - "80:80"
+#    environment:
+#      - AZURE_STORAGE_CONNECTION_STRING="UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://host.docker.internal"
+#      - AzureWebJobsStorage="UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://host.docker.internal"
+#    networks:
+#      - petstorebridge
+#
+#  azure-blob-storage:
+#    image: mcr.microsoft.com/azure-storage/azurite:latest
+#    ports:
+#      - "10000:10000"
+#      - "10001:10001"
+#      - "10002:10002"
+#    volumes:
+#      - data-volume-azurite:/opt/azurite/folder
+
 networks:
   petstorebridge:
     driver: bridge
+
+#volumes:
+#  data-volume-azurite:

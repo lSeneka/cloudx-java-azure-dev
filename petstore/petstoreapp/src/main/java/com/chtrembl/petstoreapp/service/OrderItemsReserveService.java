@@ -1,7 +1,12 @@
 package com.chtrembl.petstoreapp.service;
 
 import com.chtrembl.petstoreapp.model.ContainerEnvironment;
+import com.chtrembl.petstoreapp.model.Order;
 import com.chtrembl.petstoreapp.model.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -11,16 +16,13 @@ import reactor.core.publisher.Mono;
 import javax.annotation.PostConstruct;
 
 @Service
+@RequiredArgsConstructor
 public class OrderItemsReserveService {
 
+    private final ObjectMapper objectMapper;
     private final User sessionUser;
     private final ContainerEnvironment containerEnvironment;
     private WebClient reserveWebClient;
-
-    public OrderItemsReserveService(User sessionUser, ContainerEnvironment containerEnvironment) {
-        this.sessionUser = sessionUser;
-        this.containerEnvironment = containerEnvironment;
-    }
 
     @PostConstruct
     public void initialize() {
@@ -29,8 +31,13 @@ public class OrderItemsReserveService {
                 .build();
     }
 
-    public void reserveOrder(String order) {
-        var request = new ReserveOrderRequest(this.sessionUser.getSessionId(), order);
+    @SneakyThrows
+    public void reserveOrder(Order order) {
+        var orderJSON = this.objectMapper
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .writeValueAsString(order);
+
+        var request = new ReserveOrderRequest(this.sessionUser.getSessionId(), orderJSON);
         this.reserveWebClient.post().uri("api/v1/orders")
                 .body(BodyInserters.fromPublisher(Mono.just(request), ReserveOrderRequest.class))
                 .accept(MediaType.APPLICATION_JSON)

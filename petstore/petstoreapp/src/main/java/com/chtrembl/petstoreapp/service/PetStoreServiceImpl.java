@@ -209,11 +209,12 @@ public class PetStoreServiceImpl implements PetStoreService {
 
             var orderJSON = new ObjectMapper().setSerializationInclusion(Include.NON_NULL)
                     .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-                    .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false).writeValueAsString(updatedOrder);
+                    .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
+                    .writeValueAsString(updatedOrder);
 
             Consumer<HttpHeaders> consumer = it -> it.addAll(this.webRequest.getHeaders());
 
-            this.orderServiceWebClient.post().uri("petstoreorderservice/v2/store/order")
+            var orderWithProducts = this.orderServiceWebClient.post().uri("petstoreorderservice/v2/store/order")
                     .body(BodyInserters.fromPublisher(Mono.just(orderJSON), String.class))
                     .accept(MediaType.APPLICATION_JSON)
                     .headers(consumer)
@@ -222,7 +223,7 @@ public class PetStoreServiceImpl implements PetStoreService {
                     .retrieve()
                     .bodyToMono(Order.class).block();
 
-            this.reserveService.reserveOrder(orderJSON);
+            this.reserveService.reserveOrder(orderWithProducts);
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }
