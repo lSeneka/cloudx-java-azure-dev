@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/migrations/1-create-initial-tables.yaml
+  - include:
+      file: db/changelog/migrations/2-fill-tables.yaml

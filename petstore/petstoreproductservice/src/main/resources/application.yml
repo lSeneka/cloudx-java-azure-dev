@@ -7,6 +7,33 @@ server:
   port: ${PETSTOREPRODUCTSERVICE_SERVER_PORT:8080}
 
 spring:
+  datasource:
+    primary:
+      url: jdbc:postgresql://localhost:5432/petstoreproductservice_db
+      username: docker
+      password: SQL
+      hikari:
+        poolName: primary-connection-pool
+        minIdle: 10
+        maxPoolSize: 15
+    liquibase:
+      url: jdbc:postgresql://localhost:5432/petstoreproductservice_db
+      username: docker
+      password: SQL
+      hikari:
+        poolName: liquibase-connection-pool
+        minIdle: 0
+        maxPoolSize: 1
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   application:
     name: petstoreproductservice
   mvc:

@@ -47,6 +47,35 @@ services:
     networks:
       - petstorebridge
 
+  postgres_db:
+    image: postgres:13.1-alpine
+    container_name: postgres_13_1_db
+    ports:
+      - "5436:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./pg-init:/docker-entrypoint-initdb.d
+    networks:
+      - petstorebridge
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin4
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - petstorebridge
+
+
 #  order-items-reserve:
 #    image: order-items-reserve:latest
 #    ports:
@@ -70,5 +99,7 @@ networks:
   petstorebridge:
     driver: bridge
 
-#volumes:
+volumes:
+  pg-data:
+  pgadmin-data:
 #  data-volume-azurite:

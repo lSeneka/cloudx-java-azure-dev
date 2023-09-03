@@ -1,0 +1,94 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-initial-tables
+      author: Dzianis Kushch
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_category
+                    nullable: false
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createTable:
+            tableName: tag
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_tag
+                    nullable: false
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_product
+                    nullable: false
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_product_category
+                    references: category(id)
+              - column:
+                  name: photo_url
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: text
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: product_tag
+            columns:
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_product_tag_to_product
+                    references: product(id)
+                    onDelete: CASCADE
+              - column:
+                  name: tag_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_product_tag_to_tag
+                    references: tag(id)
+                    onDelete: CASCADE
+        -  addPrimaryKey:
+             columnNames:  product_id, tag_id
+             constraintName:  pk_product_tag
+             schemaName:  public
+             tableName:  product_tag
