@@ -47,20 +47,20 @@ services:
     networks:
       - petstorebridge
 
-# does not work on MacOS M1
-#  cosmos_db:
-#    image: mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest
-#    container_name: cosmos_db
-#    platform: linux/amd64
-#    tty: true
-#    ports:
-#      - "8999:8081"
-#      - "10250-10255:10250-10255"
-#    environment:
-#      - AZURE_COSMOS_EMULATOR_PARTITION_COUNT=2
-#      - AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true
-#    networks:
-#      - petstorebridge
+  # does not work on MacOS M1
+  #  cosmos_db:
+  #    image: mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest
+  #    container_name: cosmos_db
+  #    platform: linux/amd64
+  #    tty: true
+  #    ports:
+  #      - "8999:8081"
+  #      - "10250-10255:10250-10255"
+  #    environment:
+  #      - AZURE_COSMOS_EMULATOR_PARTITION_COUNT=2
+  #      - AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true
+  #    networks:
+  #      - petstorebridge
 
   postgres_db:
     image: postgres:13.1-alpine
