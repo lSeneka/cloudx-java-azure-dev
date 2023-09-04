@@ -1,6 +1,7 @@
 package com.chtrembl.petstore.order.model;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,6 @@ import java.util.Objects;
 import javax.validation.Valid;
 
 import org.springframework.validation.annotation.Validated;
-import org.threeten.bp.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
