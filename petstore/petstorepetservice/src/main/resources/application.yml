@@ -9,17 +9,17 @@ server:
 spring:
   datasource:
     primary:
-      url: jdbc:postgresql://localhost:5432/petstorepetservice_db
-      username: docker
-      password: SQL
+      url: ${PETSTOREPETSERVICE_DB_URL:jdbc:postgresql://localhost:5432/petstorepetservice_db}
+      username: ${PETSTOREPETSERVICE_DB_USER:docker}
+      password: ${PETSTOREPETSERVICE_DB_PASSWORD:SQL}
       hikari:
         poolName: primary-connection-pool
         minIdle: 10
         maxPoolSize: 15
     liquibase:
-      url: jdbc:postgresql://localhost:5432/petstorepetservice_db
-      username: docker
-      password: SQL
+      url: ${PETSTOREPETSERVICE_LIQUIBASE_DB_URL:jdbc:postgresql://localhost:5432/petstorepetservice_db}
+      username: ${PETSTOREPETSERVICE_LIQUIBASE_DB_PASSWORD:docker}
+      password: ${PETSTOREPETSERVICE_LIQUIBASE_DB_PASSWORD:SQL}
       hikari:
         poolName: liquibase-connection-pool
         minIdle: 0

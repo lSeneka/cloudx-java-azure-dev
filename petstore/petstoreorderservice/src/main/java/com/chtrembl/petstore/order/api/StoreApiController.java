@@ -171,8 +171,8 @@ public class StoreApiController implements StoreApi {
 
         incomeProducts.values().stream()
                 .filter(
-                        prodincomeProduct -> products.stream().noneMatch(product -> prodincomeProduct.getId().equals(product.getId())
-                                && prodincomeProduct.getQuantity() > 0)
+                        incomeProduct -> products.stream().noneMatch(product -> incomeProduct.getId().equals(product.getId())
+                                && incomeProduct.getQuantity() > 0)
                 )
                 .forEach(products::add);
         return products;

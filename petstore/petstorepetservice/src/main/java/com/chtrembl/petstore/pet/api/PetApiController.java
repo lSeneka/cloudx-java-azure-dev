@@ -97,7 +97,7 @@ public class PetApiController implements PetApi {
                         .map(PetMapper.INSTANCE::toPetModel)
                         .toList();
 
-                var petsJSON = objectMapper.writeValueAsString(pets);
+                var petsJSON = this.objectMapper.writeValueAsString(pets);
                 ApiUtil.setResponse(request, "application/json", petsJSON);
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (JsonProcessingException e) {

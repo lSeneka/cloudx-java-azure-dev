@@ -1,7 +1,6 @@
 package com.chtrembl.petstore.pet.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,12 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * Pet
- */
-@Entity(name = "category")
 @Getter
-@NoArgsConstructor
+@Entity(name = "category")
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
