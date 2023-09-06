@@ -130,7 +130,6 @@ public class StoreApiController implements StoreApi {
             order.setComplete(body.isComplete());
             order.setStatus(body.getStatus() != null ? body.getStatus().name() : null);
             order.setShipDate(body.getShipDate());
-            order.setProducts(new ArrayList<>());
 
             var products = accumulateProducts(body, order);
             order.setProducts(products);

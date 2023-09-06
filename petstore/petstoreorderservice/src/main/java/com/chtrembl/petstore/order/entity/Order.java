@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,7 +20,7 @@ public class Order {
 
     private String email;
 
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     private OffsetDateTime shipDate;
 
