@@ -223,7 +223,7 @@ public class PetStoreServiceImpl implements PetStoreService {
                     .retrieve()
                     .bodyToMono(Order.class).block();
 
-            this.reserveService.reserveOrder(orderWithProducts);
+            //this.reserveService.reserveOrder(orderWithProducts);
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }

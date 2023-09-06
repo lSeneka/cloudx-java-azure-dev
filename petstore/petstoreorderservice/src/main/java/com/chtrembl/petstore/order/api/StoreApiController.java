@@ -128,7 +128,7 @@ public class StoreApiController implements StoreApi {
             order.setId(body.getId());
             order.setEmail(body.getEmail());
             order.setComplete(body.isComplete());
-            order.setStatus(body.getStatus() == null ? body.getStatus().name() : null);
+            order.setStatus(body.getStatus() != null ? body.getStatus().name() : null);
             order.setShipDate(body.getShipDate());
             order.setProducts(new ArrayList<>());
 
@@ -185,10 +185,9 @@ public class StoreApiController implements StoreApi {
             @ApiParam(value = "ID of the order that needs to be deleted", required = true) @PathVariable("orderId") String orderId) {
         conigureThreadForLogging();
 
-        String acceptType = request.getHeader("Content-Type");
+        String acceptType = request.getHeader("Accept");
         String contentType = request.getHeader("Content-Type");
-        if (acceptType != null && contentType != null && acceptType.contains("application/json")
-                && contentType.contains("application/json")) {
+        if (acceptType != null && acceptType.contains("application/json")) {
 
             log.info(String.format(
                     "PetStoreOrderService incoming GET request to petstoreorderservice/v2/order/getOrderById for order id:%s",
@@ -196,14 +195,14 @@ public class StoreApiController implements StoreApi {
 
             List<Product> products = this.storeApiCache.getProducts();
 
-            Order order = this.storeApiCache.getOrder(orderId);
+            var order = this.cosmosDbService.findById(orderId);
 
             if (products != null) {
                 // cross reference order data (order only has product id and qty) with product
                 // data....
                 try {
                     if (order.getProducts() != null) {
-                        for (Product p : order.getProducts()) {
+                        for (var p : order.getProducts()) {
                             Product peekedProduct = getProduct(products, p.getId());
                             p.setName(peekedProduct.getName());
                             p.setPhotoURL((peekedProduct.getPhotoURL()));
