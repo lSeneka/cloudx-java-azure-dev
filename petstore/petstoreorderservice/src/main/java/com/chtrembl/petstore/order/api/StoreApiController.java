@@ -28,6 +28,7 @@ import javax.validation.constraints.Min;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -129,6 +130,7 @@ public class StoreApiController implements StoreApi {
             order.setComplete(body.isComplete());
             order.setStatus(body.getStatus() == null ? body.getStatus().name() : null);
             order.setShipDate(body.getShipDate());
+            order.setProducts(new ArrayList<>());
 
             var products = accumulateProducts(body, order);
             order.setProducts(products);
