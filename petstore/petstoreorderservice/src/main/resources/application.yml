@@ -15,8 +15,8 @@ spring:
   cloud:
     azure:
       cosmos:
-        endpoint: ${AZURE_COSMOS_ENDPOINT:https://dk-cosmos-db-416195554.documents.azure.com:443/}
-        key: ${AZURE_COSMOS_KEY:ctakm6zX4Jp85Cls4fiZlB7jZUt49UAl907Rhg7sJ9PdSS4XNoMOeNvO6CVDVLU2wjId3J9QUAMnACDbsLgjeQ==}
+        endpoint: ${AZURE_COSMOS_ENDPOINT:}
+        key: ${AZURE_COSMOS_KEY:}
         database: ordersdb
 
   application:
