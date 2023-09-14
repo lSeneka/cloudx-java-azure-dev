@@ -41,6 +41,13 @@ spring:
     cache: false
   cache:
     cache-names: currentUsers
+  cloud:
+    azure:
+      servicebus:
+        connection-string: ${ASB_ORDERS_CONNECTION_STRING:}
+        namespace: dk-orders-v1.0
+        entity-name: orders-queue
+        entity-type: QUEUE
 
 azure:
   application-insights:
