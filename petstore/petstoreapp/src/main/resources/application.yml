@@ -45,7 +45,7 @@ spring:
     azure:
       servicebus:
         connection-string: ${ASB_ORDERS_CONNECTION_STRING:}
-        namespace: dk-orders-v1.0
+        namespace: dk-orders
         entity-name: orders-queue
         entity-type: QUEUE
 
